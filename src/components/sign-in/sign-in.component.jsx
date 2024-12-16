@@ -1,3 +1,5 @@
+import Button from "../button/button";
+
 import {
   signInWithGooglePopup,
   createUserDocumentFromAuth,
@@ -12,7 +14,7 @@ const SignIn = () => {
   return (
     <div>
       <h1>Sign In</h1>
-      <button onClick={logGoogleUser}>Sign In</button>
+      <Button onClick={logGoogleUser}>Sign In</Button>
     </div>
   );
 };
