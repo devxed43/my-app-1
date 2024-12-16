@@ -1,1 +1,6 @@
 // dynamically add multiple imageUrl from array of objects
+
+// vite does not use an assets folder, it uses the public folder for assets files
+
+// todo:
+    // understand how to style the directory component
