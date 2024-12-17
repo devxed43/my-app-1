@@ -1,10 +1,17 @@
 /* eslint-disable no-unused-vars */
 import { Link, Outlet } from "react-router-dom";
-// import { ReactComponent as SVGLOGO } from "./logo.svg";
 import { Fragment } from "react";
+import { useContext } from "react";
+import { UserContext } from "../../contexts/user.context";
+import { signOutUser } from "../../utils/firebase.utils";
+import CartIcon from "../../components/cart-icon/cart-icon.component";
+import CartDropdown from "../../components/cart-dropdown/cart-dropdown.component";
 import "./navigation.styles.scss";
 
 const Navigation = () => {
+  // tells us our current user
+  const { currentUser } = useContext(UserContext);
+
   return (
     <Fragment>
       <div className="navigation">
@@ -16,10 +23,19 @@ const Navigation = () => {
           <Link className="nav-link" to="/shop">
             SHOP
           </Link>
-          <Link className="nav-link" to="/auth">
-            SIGN IN
-          </Link>
+          {currentUser ? (
+            <span className="nav-link" onClick={signOutUser}>
+              SIGN OUT
+            </span>
+          ) : (
+            <Link className="nav-link" to="/auth">
+              SIGN IN
+            </Link>
+          )}
+          <CartIcon />
         </div>
+
+        <CartDropdown />
       </div>
       <Outlet />
     </Fragment>

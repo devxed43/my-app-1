@@ -16,7 +16,6 @@ const defaultFields = {
 const SignIn = () => {
   // formFields is empty
   const [formFields, setFormFields] = useState(defaultFields);
-
   // pick off email and password from the initial empty fields
   const { email, password } = formFields;
 
@@ -27,8 +26,7 @@ const SignIn = () => {
 
   // sign in & create user document in the database
   const signInWithGoogle = async () => {
-    const { user } = await signInWithGooglePopup();
-    await createUserDocumentFromAuth(user);
+    await signInWithGooglePopup();
   };
 
   // submit form data
@@ -37,11 +35,13 @@ const SignIn = () => {
 
     // try signing the user in, take their email and password
     try {
-      const response = await signInAuthUserWithEmailAndPassword(
+      const { user } = await signInAuthUserWithEmailAndPassword(
         email,
         password
       );
-      console.log(response);
+
+      console.log(user);
+
       resetFormFields();
     } catch (error) {
       // switch statement of error codes if error occurs

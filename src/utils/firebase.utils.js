@@ -10,6 +10,10 @@ import {
   signInWithEmailAndPassword,
   // google's sign in feature
   GoogleAuthProvider,
+  // sign out
+  signOut,
+  // listener
+  onAuthStateChanged,
 } from "firebase/auth";
 
 // database functions/database library
@@ -90,4 +94,11 @@ export const signInAuthUserWithEmailAndPassword = async (email, password) => {
   if (!email || !password) return;
 
   return await signInWithEmailAndPassword(auth, email, password);
+};
+
+// auth tracks what user to sign out
+export const signOutUser = async () => await signOut(auth);
+
+export const onAuthStateChangedListener = (callback) => {
+  onAuthStateChanged(auth, callback);
 };
