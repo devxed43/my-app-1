@@ -1,10 +1,18 @@
 import { initializeApp } from "firebase/app";
 import {
+  // auth token
   getAuth,
+  // pop up window for sign in
   signInWithPopup,
+  // create user document with email && password
   createUserWithEmailAndPassword,
+  // sign in user with email && password
+  signInWithEmailAndPassword,
+  // google's sign in feature
   GoogleAuthProvider,
 } from "firebase/auth";
+
+// database functions/database library
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -18,7 +26,10 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
+// google's sign in
 const googleProvider = new GoogleAuthProvider();
+
+// select account pop up window prompt
 googleProvider.setCustomParameters({
   prompt: "select_account",
 });
@@ -72,4 +83,11 @@ export const createAuthUserWithEmailAndPassword = async (email, password) => {
   if (!email || !password) return;
 
   return await createUserWithEmailAndPassword(auth, email, password);
+};
+
+// Sign in User with email and password
+export const signInAuthUserWithEmailAndPassword = async (email, password) => {
+  if (!email || !password) return;
+
+  return await signInWithEmailAndPassword(auth, email, password);
 };
