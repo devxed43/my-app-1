@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import "./cart-item.styles.scss";
 
 const CartItem = ({ cartItem }) => {
