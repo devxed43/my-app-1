@@ -17,7 +17,14 @@ import {
 } from "firebase/auth";
 
 // database functions/database library
-import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  collection,
+  writeBatch,
+} from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCT-BOt0RR4tN7kVgwGsCVpUvkxfnJCin4",
@@ -47,6 +54,23 @@ export const signInWithGooglePopup = () =>
 
 // access database
 export const db = getFirestore();
+
+// upload shop data.js file into database
+export const addCollectionAndDocuments = async (
+  collectionkey,
+  objectsToAdd
+) => {
+  const collectionRef = collection(db, collectionkey);
+  const batch = writeBatch(db);
+
+  objectsToAdd.forEach((object) => {
+    const docRef = doc(collectionRef, object.title.toLowerCase());
+    batch.set(docRef, object);
+  });
+
+  await batch.commit();
+  console.log("done");
+};
 
 // Create User Document
 export const createUserDocumentFromAuth = async (
