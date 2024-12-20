@@ -1,4 +1,6 @@
 import { initializeApp } from "firebase/app";
+
+// AUTHENTICATION FUNCTIONALITY
 import {
   // auth token
   getAuth,
@@ -16,7 +18,7 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 
-// database functions/database library
+// DATABASE FUNCTIONALITY
 import {
   getFirestore,
   doc,
@@ -28,6 +30,7 @@ import {
   getDocs,
 } from "firebase/firestore";
 
+// CONFIGURE APP
 const firebaseConfig = {
   apiKey: "AIzaSyCT-BOt0RR4tN7kVgwGsCVpUvkxfnJCin4",
   authDomain: "e-store-cbeac.firebaseapp.com",
@@ -37,24 +40,25 @@ const firebaseConfig = {
   appId: "1:980500307602:web:0c8cf120639e153ddb904b",
 };
 
+// INITIALIZE APP
 const app = initializeApp(firebaseConfig);
 
-// google's sign in
+// GOOGLE SIGN IN PROVIDER
 const googleProvider = new GoogleAuthProvider();
 
-// select account pop up window prompt
+// POP UP WINDOW
 googleProvider.setCustomParameters({
   prompt: "select_account",
 });
 
-// auth token
+// AUTH TOKEN
 export const auth = getAuth();
 
-// pop up sign-in
+// POP UP WINDOW FUNCTIONALITY
 export const signInWithGooglePopup = () =>
   signInWithPopup(auth, googleProvider);
 
-// access database
+// ACCESS DATABASE
 export const db = getFirestore();
 
 // upload shop data.js file into database
