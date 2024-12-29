@@ -1,9 +1,24 @@
 import { Routes, Route } from "react-router-dom";
 import CategoriesPreview from "../categories-preview/categories-preview.component";
 import Category from "../category/category.component";
+import { useDispatch } from "react-redux";
 import "./shop.styles.scss";
+import { useEffect } from "react";
+import { getCategoriesAndDocuments } from "../../utils/firebase.utils";
+import { setCategories } from "../../store/categories/categories.action";
 
 const Shop = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const getCategoriesMap = async () => {
+      const categoriesArray = await getCategoriesAndDocuments("categories");
+      dispatch(setCategories(categoriesArray));
+    };
+
+    getCategoriesMap();
+  }, []);
+
   return (
     <Routes>
       <Route index element={<CategoriesPreview />} />
@@ -13,19 +28,3 @@ const Shop = () => {
 };
 
 export default Shop;
-
-// Q1: what is this code doing? it's pulling the object from the utils/context?
-// Q2: what is the product off of the title of categories?
-
-// {Object.keys(categories).map((title) => (
-//   <Fragment key={title}>
-//     <h2>{title}</h2>
-//     <div className="products-container">
-//       {categories[title].map((product) => (
-//         <ProductCard key={product.id} product={product} />
-//       ))}
-//     </div>
-//   </Fragment>
-// ))}
-
-// path=":" is for url params

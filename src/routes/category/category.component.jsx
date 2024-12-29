@@ -1,25 +1,23 @@
-import { useContext, useState, useEffect, Fragment } from "react";
+import { useState, useEffect, Fragment } from "react";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-// useParams is returned as an object
-import { CategoriesContext } from "../../contexts/categories.context";
 import ProductCard from "../../components/product-card/product-card";
 import "./category.styles.scss";
+import { selectCategoriesMap } from "../../store/categories/categories.selector";
 
 const Category = () => {
-  const { category } = useParams(); // access via url
-  //   categoriesMap
-  const { categories } = useContext(CategoriesContext);
-  const [products, setProducts] = useState(categories[category]);
-  // by default categories is an empty object so this works
+  const { category } = useParams();
+  const categoriesMap = useSelector(selectCategoriesMap);
+  const [products, setProducts] = useState(categoriesMap[category]);
 
   useEffect(() => {
-    setProducts(categories[category]); // set the categories with value key of category clicked on
-  }, [category, categories]);
+    setProducts(categoriesMap[category]);
+  }, [category, categoriesMap]);
+
   return (
     <Fragment>
       <h2 className="category-title">{category.toUpperCase()}</h2>
       <div className="category-container">
-        {/* this short circuit operator only renders if products are present */}
         {products &&
           products.map((product) => (
             <ProductCard key={product.id} product={product} />
@@ -30,5 +28,3 @@ const Category = () => {
 };
 
 export default Category;
-
-// figure this out how url is accessed and displays components
